@@ -1,0 +1,638 @@
+/* =====================================================
+   VARIABLES Y CONFIGURACIÓN BASE
+   ===================================================== */
+
+:root {
+    --color-primary: #1e3a8a;
+    --color-secondary: #0d9488;
+    --color-accent: #22d3ee;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+/* =====================================================
+   SCROLL SUAVE
+   ===================================================== */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* =====================================================
+   GRADIENTES Y FONDOS
+   ===================================================== */
+
+.gradient-bg {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0d9488 100%);
+    position: relative;
+    isolation: isolate;
+}
+
+.gradient-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    animation: shimmer 3s infinite;
+    z-index: -1;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, #1e3a8a, #0d9488, #22d3ee);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* =====================================================
+   NAVEGACIÓN
+   ===================================================== */
+
+nav {
+    transition: var(--transition-smooth);
+}
+
+.nav-link {
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #1e3a8a, #0d9488);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #0d9488;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* =====================================================
+   TARJETAS DEL SELECTOR DE PERFIL
+   ===================================================== */
+
+.profile-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    color: white;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    isolation: isolate;
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -2;
+}
+
+.profile-card:hover::before {
+    opacity: 1;
+}
+
+.profile-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-8px) scale(1.02);
+    border-color: #22d3ee;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2), 0 0 0 1px rgba(34, 211, 238, 0.5);
+}
+
+.profile-card:active {
+    transform: translateY(-4px) scale(1.01);
+}
+
+.icon-wrapper {
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 1;
+}
+
+/* =====================================================
+   CAJAS DE FUNCIONALIDADES
+   ===================================================== */
+
+.feature-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    border: 2px solid #f1f5f9;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.feature-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #1e3a8a, #0d9488);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: -1;
+}
+
+.feature-box:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-box:hover {
+    border-color: #0d9488;
+    box-shadow: 0 20px 40px -10px rgba(13, 148, 136, 0.2);
+    transform: translateY(-8px);
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 1;
+}
+
+.feature-box:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-box h3,
+.feature-box p {
+    position: relative;
+    z-index: 1;
+}
+
+/* =====================================================
+   TARJETAS DE BENEFICIOS
+   ===================================================== */
+
+.benefit-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(8px);
+    border-color: rgba(34, 211, 238, 0.5);
+}
+
+/* =====================================================
+   TARJETAS DE INGRESOS
+   ===================================================== */
+
+.revenue-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    border: 2px solid #e2e8f0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+}
+
+.revenue-card:hover {
+    border-color: #0d9488;
+    box-shadow: 0 20px 40px -10px rgba(13, 148, 136, 0.15);
+    transform: translateY(-8px);
+}
+
+.revenue-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.revenue-card:hover .revenue-icon {
+    transform: scale(1.1);
+}
+
+/* =====================================================
+   TARJETAS DE EQUIPO
+   ===================================================== */
+
+.team-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+}
+
+.team-card:hover {
+    border-color: #0d9488;
+    box-shadow: 0 20px 40px -10px rgba(13, 148, 136, 0.2);
+    transform: translateY(-8px);
+}
+
+.team-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: var(--transition-smooth);
+    box-shadow: 0 10px 30px -5px rgba(0,0,0,0.3);
+}
+
+.team-card:hover .team-avatar {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* =====================================================
+   BOTONES Y CTAs
+   ===================================================== */
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1);
+    color: white;
+    text-decoration: none;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+.btn-pulse {
+    animation: pulse-animation 2s ease-in-out infinite;
+}
+
+@keyframes pulse-animation {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.7);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 0 10px rgba(13, 148, 136, 0);
+        transform: scale(1.05);
+    }
+}
+
+/* =====================================================
+   ANIMACIONES DE ENTRADA
+   ===================================================== */
+
+.fade-in {
+    animation: fadeIn 1s ease-out;
+}
+
+.fade-in-delay {
+    animation: fadeIn 1s ease-out 0.3s backwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hover-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* =====================================================
+   UTILIDADES
+   ===================================================== */
+
+.hidden {
+    display: none !important;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #1e3a8a, #0d9488);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #0d9488, #1e3a8a);
+}
+
+/* =====================================================
+   EFECTOS DE SELECCIÓN
+   ===================================================== */
+
+::selection {
+    background: #22d3ee;
+    color: white;
+}
+
+::-moz-selection {
+    background: #22d3ee;
+    color: white;
+}
+
+/* =====================================================
+   RESPONSIVE MEJORAS
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 1.5rem;
+    }
+    
+    .feature-box {
+        padding: 1.5rem;
+    }
+    
+    .revenue-card {
+        padding: 1.5rem;
+    }
+    
+    .team-card {
+        padding: 1.5rem;
+    }
+    
+    .cta-button {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* =====================================================
+   MEJORAS DE ACCESIBILIDAD
+   ===================================================== */
+
+.profile-card:focus,
+.cta-button:focus,
+button:focus {
+    outline: 2px solid #22d3ee;
+    outline-offset: 2px;
+}
+
+/* Reducir movimiento para usuarios que lo prefieran */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* =====================================================
+   PREVENCIÓN DE SUPERPOSICIONES
+   ===================================================== */
+
+/* Asegurar orden de apilamiento correcto */
+section {
+    position: relative;
+    z-index: 1;
+}
+
+/* El selector de perfil debe estar por encima de todo */
+#profile-selector {
+    z-index: 100;
+}
+
+/* Navbar debe estar por encima del contenido pero debajo del selector */
+nav {
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Menú móvil */
+#mobile-menu {
+    position: relative;
+    z-index: 40;
+}
+
+/* Elementos decorativos siempre atrás */
+.absolute.inset-0 {
+    z-index: -1;
+}
+
+/* Contenido principal */
+main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Todos los ::before y ::after decorativos deben estar detrás del contenido */
+*::before,
+*::after {
+    z-index: inherit;
+}
+
+/* Excepto cuando se especifique explícitamente */
+.feature-box > *,
+.profile-card > *,
+.revenue-card > *,
+.team-card > *,
+.benefit-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* =====================================================
+   EFECTOS ADICIONALES
+   ===================================================== */
+
+/* Efecto de luz en hover */
+.profile-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.profile-card:hover::after {
+    opacity: 1;
+}
+
+.profile-card h3,
+.profile-card p,
+.profile-card span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Efecto de brillo en iconos */
+@keyframes icon-glow {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.5)); }
+    50% { filter: drop-shadow(0 0 15px rgba(34, 211, 238, 0.8)); }
+}
+
+.feature-box:hover .feature-icon i,
+.revenue-card:hover .revenue-icon i {
+    animation: icon-glow 2s ease-in-out infinite;
+}
+
+/* Logo container mejoras */
+.logo-container {
+    position: relative;
+    z-index: 1;
+}
+
+.logo-container::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: logo-pulse 2s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes logo-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* Prevenir superposiciones */
+#profile-selector {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#main-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Asegurar que el navbar esté por encima */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* =====================================================
+   BOTÓN FLOTANTE DE FEEDBACK
+   ===================================================== */
+
+#floating-feedback {
+    animation: float-gentle 3s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+#floating-feedback:hover {
+    animation: none;
+}
+
+/* Efecto de sombra mejorado para el botón flotante */
+#floating-feedback {
+    box-shadow: 
+        0 10px 40px rgba(13, 148, 136, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+#floating-feedback:hover {
+    box-shadow: 
+        0 15px 50px rgba(13, 148, 136, 0.4),
+        0 0 0 2px rgba(255, 255, 255, 0.2) inset;
+}
+
+/* Animación de rebote para el icono */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Responsive para el botón flotante */
+@media (max-width: 768px) {
+    #floating-feedback {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 1rem;
+    }
+    
+    #floating-feedback span {
+        display: none;
+    }
+}

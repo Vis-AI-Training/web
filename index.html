@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vis AI - Ecosistema Fitness Inteligente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Selector de Perfil -->
+    <section id="profile-selector" class="fixed inset-0 z-[100] gradient-bg flex items-center justify-center p-6">
+        <div class="max-w-5xl w-full text-center">
+            <div class="logo-container mb-8">
+                <img src="assets/LogoBrazo.png" alt="Vis AI Logo" class="h-24 mx-auto rounded-2xl shadow-2xl hover-float">
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black text-white mb-4 fade-in">Bienvenido a Vis AI</h1>
+            <p class="text-blue-100 mb-12 text-xl fade-in-delay">Democratizando el fitness a través de la inteligencia artificial</p>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <button onclick="showMainApp('usuario')" class="profile-card group">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-user-ninja text-4xl mb-4 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Soy Usuario</h3>
+                    <p class="text-sm opacity-80 mb-3">Quiero entrenar gratis con IA y mejorar mi salud</p>
+                    <span class="text-xs text-cyan-300 font-semibold">100% Gratuito →</span>
+                </button>
+
+                <button onclick="showMainApp('profesional')" class="profile-card group">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-user-md text-4xl mb-4 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Soy Profesional</h3>
+                    <p class="text-sm opacity-80 mb-3">Soy entrenador o nutricionista buscando clientes</p>
+                    <span class="text-xs text-cyan-300 font-semibold">Sin comisiones →</span>
+                </button>
+
+                <button onclick="showMainApp('empresa')" class="profile-card group">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-building text-4xl mb-4 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2">Soy Empresa</h3>
+                    <p class="text-sm opacity-80 mb-3">Interesado en estadísticas de mercado o publicidad</p>
+                    <span class="text-xs text-cyan-300 font-semibold">Datos reales →</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido Principal -->
+    <main id="main-content" class="hidden">
+        <!-- Botón Flotante de Feedback -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScSXxv8v_n2irs76Ig0wv-nDcuer_GNdcCpB96BhcoCSR5xCg/viewform?usp=dialog" 
+           target="_blank"
+           class="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-6 py-4 rounded-full shadow-2xl hover:shadow-3xl hover:scale-110 transition-all flex items-center gap-3 font-bold group"
+           id="floating-feedback">
+            <i class="fas fa-comment-dots text-xl group-hover:animate-bounce"></i>
+            <span class="hidden md:inline">Feedback</span>
+            <div class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
+            <div class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+        </a>
+
+        <!-- Navegación -->
+        <nav class="p-6 flex justify-between items-center bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50">
+            <div class="flex items-center gap-3">
+                <img src="assets/LogoBrazo.png" alt="Vis AI Logo" class="h-12 rounded-lg">
+                <span class="font-black text-2xl tracking-tighter text-blue-900">VIS AI</span>
+            </div>
+            <div class="hidden md:flex gap-8 font-semibold items-center">
+                <a href="#app" class="nav-link">La App</a>
+                <a href="#profesionales" class="nav-link">Profesionales</a>
+                <a href="#modelo" class="nav-link">Modelo de Negocio</a>
+                <a href="#equipo" class="nav-link">Equipo</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScSXxv8v_n2irs76Ig0wv-nDcuer_GNdcCpB96BhcoCSR5xCg/viewform?usp=dialog" target="_blank" class="bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-6 py-2.5 rounded-full text-sm btn-pulse shadow-lg hover:shadow-xl transition-all">
+                    <i class="fas fa-comment-dots mr-2"></i>Feedback
+                </a>
+            </div>
+            <button class="md:hidden text-2xl text-blue-900" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg p-6">
+            <a href="#app" class="block py-3 font-semibold hover:text-blue-600">La App</a>
+            <a href="#profesionales" class="block py-3 font-semibold hover:text-blue-600">Profesionales</a>
+            <a href="#modelo" class="block py-3 font-semibold hover:text-blue-600">Modelo de Negocio</a>
+            <a href="#equipo" class="block py-3 font-semibold hover:text-blue-600">Equipo</a>
+        </div>
+
+        <!-- Hero Section -->
+        <header class="py-24 px-6 max-w-7xl mx-auto text-center relative overflow-hidden">
+            <div class="absolute inset-0 -z-10 opacity-5 pointer-events-none">
+                <div class="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-20 right-10 w-96 h-96 bg-teal-500 rounded-full blur-3xl"></div>
+            </div>
+            
+            <span id="badge-perfil" class="inline-block bg-gradient-to-r from-blue-100 to-teal-100 text-blue-700 px-5 py-2 rounded-full text-sm font-bold uppercase mb-6 border-2 border-blue-200 relative z-10"></span>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mt-6 mb-8 leading-tight relative z-10">
+                Democratizando el fitness <br>
+                <span class="text-gradient">a través de la IA</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-slate-600 max-w-3xl mx-auto mb-12 leading-relaxed relative z-10">
+                Un ecosistema completo donde los usuarios entrenan gratis, los profesionales impulsan su carrera y las marcas conectan con su audiencia ideal.
+            </p>
+
+            <div class="flex flex-wrap gap-4 justify-center relative z-10">
+                <a href="#app" class="cta-button bg-gradient-to-r from-blue-600 to-teal-600">
+                    <i class="fas fa-rocket mr-2"></i>Explorar funcionalidades
+                </a>
+                <a href="#modelo" class="cta-button bg-white text-blue-900 border-2 border-blue-600 hover:bg-blue-50">
+                    <i class="fas fa-chart-line mr-2"></i>Ver modelo de negocio
+                </a>
+            </div>
+        </header>
+
+        <!-- Sección de Feedback Destacada -->
+        <section class="py-12 px-6 bg-gradient-to-r from-teal-50 to-cyan-50 border-y-2 border-teal-200">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10 border-2 border-teal-300">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="flex-shrink-0">
+                            <div class="w-20 h-20 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg">
+                                <i class="fas fa-comments text-white text-3xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-2xl md:text-3xl font-black text-slate-800 mb-2">
+                                ¡Tu opinión es fundamental! 💡
+                            </h3>
+                            <p class="text-slate-600 text-lg mb-4">
+                                Ayúdanos a mejorar Vis AI. Completa nuestra encuesta rápida y comparte tus ideas para crear la mejor app de fitness.
+                            </p>
+                            <div class="flex flex-wrap gap-3 justify-center md:justify-start items-center">
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLScSXxv8v_n2irs76Ig0wv-nDcuer_GNdcCpB96BhcoCSR5xCg/viewform?usp=dialog" 
+                                   target="_blank" 
+                                   class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-all">
+                                    <i class="fas fa-pen-to-square"></i>
+                                    Completar Encuesta
+                                </a>
+                                <span class="text-sm text-slate-500 flex items-center gap-1">
+                                    <i class="fas fa-clock"></i>
+                                    Solo 2 minutos
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Funcionalidades Core -->
+        <section id="app" class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-teal-600 font-bold uppercase tracking-wider text-sm">Funcionalidades</span>
+                <h2 class="text-4xl md:text-5xl font-black mt-3 mb-4">Todo lo que necesitas en una app</h2>
+                <p class="text-slate-600 text-lg max-w-2xl mx-auto">Tecnología de IA combinada con conocimiento científico para ofrecerte la mejor experiencia</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="feature-box group">
+                    <div class="feature-icon bg-blue-100">
+                        <i class="fas fa-brain text-blue-600 text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Planificación Inteligente</h3>
+                    <p class="text-slate-600">IA que analiza tus últimas semanas, nivel y tiempo disponible para crear planes personalizados óptimos.</p>
+                </div>
+
+                <div class="feature-box group">
+                    <div class="feature-icon bg-teal-100">
+                        <i class="fas fa-running text-teal-600 text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Multideporte</h3>
+                    <p class="text-slate-600">Entrenamientos específicos para atletismo, tenis, pádel, gym y más. Adaptado a tu deporte favorito.</p>
+                </div>
+
+                <div class="feature-box group">
+                    <div class="feature-icon bg-purple-100">
+                        <i class="fas fa-utensils text-purple-600 text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Nutrición Científica</h3>
+                    <p class="text-slate-600">Consejos respaldados por estudios científicos y registro detallado de dieta con cantidades precisas.</p>
+                </div>
+
+                <div class="feature-box group">
+                    <div class="feature-icon bg-orange-100">
+                        <i class="fas fa-video text-orange-600 text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Ejemplos Visuales</h3>
+                    <p class="text-slate-600">Vídeos y animaciones de cada ejercicio para garantizar una técnica perfecta y evitar lesiones.</p>
+                </div>
+
+                <div class="feature-box group">
+                    <div class="feature-icon bg-green-100">
+                        <i class="fas fa-chart-line text-green-600 text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Seguimiento Gráfico</h3>
+                    <p class="text-slate-600">Visualiza tu progreso con gráficos detallados y estadísticas que te motivan a seguir mejorando.</p>
+                </div>
+
+                <div class="feature-box group">
+                    <div class="feature-icon bg-pink-100">
+                        <i class="fas fa-clipboard-check text-pink-600 text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3">Plantillas por Niveles</h3>
+                    <p class="text-slate-600">Desde principiante hasta avanzado, con rutinas diseñadas para cada grupo muscular.</p>
+                </div>
+            </div>
+
+            <!-- Disclaimer importante -->
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-lg">
+                <div class="flex items-start gap-4">
+                    <i class="fas fa-info-circle text-amber-600 text-2xl mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-lg mb-2 text-amber-900">Importante: Sobre las recomendaciones de IA</h4>
+                        <p class="text-amber-800 mb-3">Las recomendaciones de la IA NO son supervisadas por profesionales. Para un seguimiento personalizado y profesional:</p>
+                        <ul class="space-y-2 text-amber-800">
+                            <li class="flex items-center gap-2">
+                                <i class="fas fa-check text-amber-600"></i>
+                                <span>Contacta con un <strong>entrenador personal</strong> certificado a través de la app</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fas fa-check text-amber-600"></i>
+                                <span>Consulta con un <strong>nutricionista</strong> para planes alimenticios profesionales</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profesionales -->
+        <section id="profesionales" class="py-24 gradient-bg text-white relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-cyan-400 rounded-full blur-3xl"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-cyan-300 font-bold uppercase tracking-wider text-sm">Para Profesionales</span>
+                    <h2 class="text-4xl md:text-5xl font-black mt-3 mb-4">Impulsa tu carrera profesional</h2>
+                    <p class="text-blue-100 text-lg max-w-2xl mx-auto">Una plataforma diseñada para ayudarte a crecer sin barreras</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-6">¿Quién puede beneficiarse?</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+                                <i class="fas fa-graduation-cap text-cyan-400 text-2xl mt-1"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Recién Graduados</h4>
+                                    <p class="text-blue-100">Estudiantes de CAFyD y Nutrición que buscan sus primeros clientes</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4 bg-white/10 p-4 rounded-xl backdrop-blur-sm">
+                                <i class="fas fa-star text-cyan-400 text-2xl mt-1"></i>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Profesionales con Experiencia</h4>
+                                    <p class="text-blue-100">Mejor gestión de clientes y herramientas para escalar tu negocio</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="benefit-card">
+                            <i class="fas fa-wallet text-3xl text-cyan-400 mb-3"></i>
+                            <h4 class="font-bold text-xl mb-2">Cobro Íntegro</h4>
+                            <p class="text-blue-100">El 100% del pago del usuario va directo a ti. No nos quedamos con tu dinero.</p>
+                        </div>
+
+                        <div class="benefit-card">
+                            <i class="fas fa-rocket text-3xl text-cyan-400 mb-3"></i>
+                            <h4 class="font-bold text-xl mb-2">Escala Sin Costes Iniciales</h4>
+                            <p class="text-blue-100">De 0 a 10 clientes pagas 0€. Tarifas progresivas según crezcas.</p>
+                        </div>
+
+                        <div class="benefit-card">
+                            <i class="fas fa-hand-holding-usd text-3xl text-cyan-400 mb-3"></i>
+                            <h4 class="font-bold text-xl mb-2">Libertad Total de Precios</h4>
+                            <p class="text-blue-100">Tú estableces tus tarifas. Libre mercado sin imposiciones.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio -->
+                <div class="bg-white/10 p-8 md:p-12 rounded-3xl backdrop-blur-md border border-white/20 max-w-4xl mx-auto">
+                    <i class="fas fa-quote-left text-4xl text-cyan-400 mb-6"></i>
+                    <h3 class="text-3xl font-bold mb-4 italic">"Nacida de una necesidad real"</h3>
+                    <p class="text-lg leading-relaxed text-blue-50">
+                        Vis AI surge ante la falta de aplicaciones que cubran todas las necesidades de seguimiento de forma gratuita y profesional. Queríamos crear algo diferente, un ecosistema que beneficie a todos.
+                    </p>
+                    <div class="mt-6 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-cyan-400 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-blue-900"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold">Equipo Vis AI</p>
+                            <p class="text-sm text-blue-200">Fundadores</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modelo de Negocio -->
+        <section id="modelo" class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-teal-600 font-bold uppercase tracking-wider text-sm">Sostenibilidad</span>
+                <h2 class="text-4xl md:text-5xl font-black mt-3 mb-4">¿Cómo nos mantenemos?</h2>
+                <p class="text-slate-600 text-lg max-w-2xl mx-auto">Un modelo de negocio transparente y justo para todos</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <!-- Fuente 1: Profesionales -->
+                <div class="revenue-card">
+                    <div class="revenue-icon bg-blue-100">
+                        <i class="fas fa-users text-blue-600 text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Profesionales</h3>
+                    <p class="text-slate-600 mb-6">Tarifas progresivas según el número de clientes gestionados</p>
+                    <div class="bg-slate-50 p-4 rounded-lg">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-semibold">0-10 clientes</span>
+                            <span class="text-green-600 font-bold">0%</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-semibold">10-20 clientes</span>
+                            <span class="text-blue-600 font-bold">~5%*</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-3">*Porcentajes en revisión</p>
+                    </div>
+                </div>
+
+                <!-- Fuente 2: Publicidad -->
+                <div class="revenue-card">
+                    <div class="revenue-icon bg-teal-100">
+                        <i class="fas fa-ad text-teal-600 text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Publicidad Inteligente</h3>
+                    <p class="text-slate-600 mb-6">Durante descansos voluntarios del entrenamiento</p>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-teal-600 mt-1"></i>
+                            <span>Marcas deportivas relevantes</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-teal-600 mt-1"></i>
+                            <span>Cuenta atrás del descanso</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-teal-600 mt-1"></i>
+                            <span>Siempre omitible</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Fuente 3: Afiliados -->
+                <div class="revenue-card">
+                    <div class="revenue-icon bg-purple-100">
+                        <i class="fas fa-shopping-cart text-purple-600 text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Marketing de Afiliados</h3>
+                    <p class="text-slate-600 mb-6">Tienda integrada con productos deportivos</p>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-purple-600 mt-1"></i>
+                            <span>Suplementos deportivos</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-purple-600 mt-1"></i>
+                            <span>Equipamiento fitness</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check text-purple-600 mt-1"></i>
+                            <span>Ropa deportiva</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Datos para empresas -->
+            <div class="bg-gradient-to-br from-slate-100 to-blue-50 p-8 md:p-12 rounded-3xl border-2 border-blue-100">
+                <div class="flex items-start gap-6">
+                    <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-bar text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-3">Estadísticas Anónimas para Empresas</h3>
+                        <p class="text-slate-700 mb-4">
+                            Los datos agregados y anónimos de usuarios (con consentimiento) se utilizan para crear insights valiosos del mercado fitness.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm">
+                            <div class="flex items-center gap-2 text-slate-600">
+                                <i class="fas fa-shield-alt text-blue-600"></i>
+                                <span>100% anónimo y seguro</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-600">
+                                <i class="fas fa-chart-pie text-blue-600"></i>
+                                <span>Tendencias de mercado</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-600">
+                                <i class="fas fa-users text-blue-600"></i>
+                                <span>Segmentación demográfica</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-slate-600">
+                                <i class="fas fa-clock text-blue-600"></i>
+                                <span>Patrones de entrenamiento</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Equipo -->
+        <section id="equipo" class="py-24 px-6 bg-slate-100">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-teal-600 font-bold uppercase tracking-wider text-sm">Nuestro Equipo</span>
+                    <h2 class="text-4xl md:text-5xl font-black mt-3 mb-4">Las personas detrás de Vis AI</h2>
+                    <p class="text-slate-600 text-lg max-w-2xl mx-auto">Tres estudiantes apasionados por democratizar el fitness</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="team-card">
+                        <div class="team-avatar bg-gradient-to-br from-blue-500 to-blue-600">
+                            <i class="fas fa-code text-white text-4xl"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mt-4 mb-1">Javier Prados Acosta</h3>
+                        <p class="text-teal-600 font-semibold mb-3">Coordinador & Desarrollador</p>
+                        <p class="text-slate-600 text-sm">Lidera el proyecto y desarrolla la arquitectura técnica de la plataforma.</p>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-avatar bg-gradient-to-br from-teal-500 to-teal-600">
+                            <i class="fas fa-laptop-code text-white text-4xl"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mt-4 mb-1">Carlos Pérez Cantalapiedra</h3>
+                        <p class="text-teal-600 font-semibold mb-3">Desarrollador</p>
+                        <p class="text-slate-600 text-sm">Desarrolla funcionalidades core y optimiza la experiencia de usuario.</p>
+                    </div>
+
+                    <div class="team-card">
+                        <div class="team-avatar bg-gradient-to-br from-purple-500 to-purple-600">
+                            <i class="fas fa-apple-alt text-white text-4xl"></i>
+                        </div>
+                        <h3 class="font-bold text-xl mt-4 mb-1">Maria Ballesteros</h3>
+                        <p class="text-teal-600 font-semibold mb-3">Nutricionista</p>
+                        <p class="text-slate-600 text-sm">Asegura que todos los consejos nutricionales estén respaldados científicamente.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <section class="py-20 px-6 bg-gradient-to-r from-blue-900 to-teal-700 text-white">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-black mb-6">¿Listo para comenzar?</h2>
+                <p class="text-xl text-blue-100 mb-8">Únete a la revolución del fitness inteligente y gratuito</p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="#profile-selector" onclick="resetToSelector()" class="bg-white text-blue-900 px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl transition-all">
+                        <i class="fas fa-rocket mr-2"></i>Empezar ahora
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScSXxv8v_n2irs76Ig0wv-nDcuer_GNdcCpB96BhcoCSR5xCg/viewform?usp=dialog" target="_blank" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-blue-900 transition-all">
+                        <i class="fas fa-comment-dots mr-2"></i>Enviar feedback
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-slate-900 text-white py-12 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-4 gap-8 mb-8">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <img src="assets/LogoBrazo.png" alt="Vis AI Logo" class="h-10 rounded-lg">
+                            <span class="font-black text-xl">VIS AI</span>
+                        </div>
+                        <p class="text-slate-400 text-sm">Democratizando el fitness a través de la inteligencia artificial.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Producto</h4>
+                        <ul class="space-y-2 text-slate-400 text-sm">
+                            <li><a href="#app" class="hover:text-white transition-colors">Funcionalidades</a></li>
+                            <li><a href="#profesionales" class="hover:text-white transition-colors">Para Profesionales</a></li>
+                            <li><a href="#modelo" class="hover:text-white transition-colors">Modelo de Negocio</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Equipo</h4>
+                        <ul class="space-y-2 text-slate-400 text-sm">
+                            <li><a href="#equipo" class="hover:text-white transition-colors">Sobre Nosotros</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Contacto</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Legal</h4>
+                        <ul class="space-y-2 text-slate-400 text-sm">
+                            <li><a href="#" class="hover:text-white transition-colors">Privacidad</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Términos</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-800 pt-8 text-center text-slate-500 text-sm">
+                    <p class="mb-2">© 2026 Vis AI - Proyecto de Innovación</p>
+                    <p>Creado por Javier Prados, Carlos Pérez y Maria Ballesteros</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
